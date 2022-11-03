@@ -146,8 +146,8 @@ public class DriveSubsystem extends SubsystemBase {
         DifferentialDrive.WheelSpeeds relativeSpeeds = diffDrive.arcadeDriveIK(xSpeed, rot, squareInputs) ;
         DifferentialDrive.WheelSpeeds absoluteSpeeds 
            = new DifferentialDrive.WheelSpeeds( 
-                 relativeSpeeds.left * Constants.DriveConstants.MaxAttainableVelocity, 
-                 relativeSpeeds.left * Constants.DriveConstants.MaxAttainableVelocity ) ;
+                 relativeSpeeds.left * Constants.DriveConstants.kMaxSpeed, //MaxAttainableVelocity
+                 relativeSpeeds.left * Constants.DriveConstants.kMaxSpeed);
         setWheelSpeeds( absoluteSpeeds ) ;
     }
 
@@ -175,8 +175,10 @@ public class DriveSubsystem extends SubsystemBase {
 
 
     public void setWheelSpeeds( DifferentialDrive.WheelSpeeds speeds) {
-        m_leftLeader.set( TalonSRXControlMode.Velocity, convert speeds.left to meters per second to counts per 100 mSec) ;
-        m_rightLeader.set( TalonSRXControlMode.Velocity, convert speeds.right meters per second to counts per 100 mSec) ;
+        m_leftLeader.set( TalonSRXControlMode.Velocity, (speeds.left*Constants.DriveConstants.Counts_Per_Meter*(1/100))) ;
+        m_rightLeader.set( TalonSRXControlMode.Velocity, (speeds.right*Constants.DriveConstants.Counts_Per_Meter*(1/100)));
+        // m_leftLeader.set( TalonSRXControlMode.Velocity, convert speeds.left to meters per second to counts per 100 mSec) ;
+        // m_rightLeader.set( TalonSRXControlMode.Velocity, convert speeds.right meters per second to counts per 100 mSec) ;
     }
 
 

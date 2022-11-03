@@ -34,6 +34,7 @@ public final class Constants {
         public static final double Wheel_Diameter = 6.0 * InchesToMeters;
         public static final double Meters_Per_Revolution = Wheel_Diameter * Math.PI ;
         public static final double Meters_Per_Count = Meters_Per_Revolution / Counts_Per_Revolution;
+        public static final double Counts_Per_Meter = Counts_Per_Revolution / Meters_Per_Revolution;
 
         public static int ID_leftLeaderMotor = 4;
         public static int ID_leftFollowerMotor = 5;

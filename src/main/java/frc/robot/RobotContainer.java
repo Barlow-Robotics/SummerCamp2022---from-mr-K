@@ -162,6 +162,8 @@ public class RobotContainer {
     indexAndShooterButton.whenPressed(startIndexAndShooterCommand).whenReleased(stopIndexAndShooterCommand);
 
     driveDistanceButton = new JoystickButton(m_driverController, Constants.Logitech_Dual_Action.Button_Y);
+    
+    driveDistanceButton.whileHeld(driveDistanceCommand);
   }
 
   /**
