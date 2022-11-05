@@ -71,7 +71,7 @@ public class DriveSubsystem extends SubsystemBase {
         m_leftLeader.setSensorPhase(true);
         m_rightLeader.setSensorPhase(true);
 
-        diffDrive = new DifferentialDrive(m_leftLeader, m_rightLeader);
+         diffDrive = new DifferentialDrive(m_leftLeader, m_rightLeader);
 
         m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
 
@@ -138,12 +138,12 @@ public class DriveSubsystem extends SubsystemBase {
      */
     @SuppressWarnings("ParameterName")
     public void drive(double xSpeed, double rot, boolean squareInputs) {
-        NetworkTableInstance.getDefault().getEntry("drive/xSpeed").setDouble(m_leftLeader.getSelectedSensorPosition());
+        NetworkTableInstance.getDefault().getEntry("drive/xSpeed").setDouble(m_leftLeader.getSelectedSensorVelocity());
         NetworkTableInstance.getDefault().getEntry("drive/rot").setDouble(m_leftLeader.getSelectedSensorPosition());
         NetworkTableInstance.getDefault().getEntry("drive/arcadeDrive").setDouble(100.0);
         diffDrive.arcadeDrive(xSpeed, rot, squareInputs);
 
-        DifferentialDrive.WheelSpeeds relativeSpeeds = diffDrive.arcadeDriveIK(xSpeed, rot, squareInputs) ;
+        DifferentialDrive.WheelSpeeds relativeSpeeds = DifferentialDrive.arcadeDriveIK(xSpeed, rot, squareInputs) ;
         DifferentialDrive.WheelSpeeds absoluteSpeeds 
            = new DifferentialDrive.WheelSpeeds( 
                  relativeSpeeds.left * Constants.DriveConstants.kMaxSpeed, //MaxAttainableVelocity
@@ -157,9 +157,9 @@ public class DriveSubsystem extends SubsystemBase {
         m_rightLeader.setSelectedSensorPosition(0);
     }
 
-    public void setMaxOutput(double maxOutput) {
-        diffDrive.setMaxOutput(maxOutput);
-    }
+//     public void setMaxOutput(double maxOutput) {
+//         diffDrive.setMaxOutput(maxOutput);
+//     }
 
     public double getGyroHeading() {
         return Math.IEEEremainder(m_gyro.getAngle(), 360.0);
@@ -175,8 +175,9 @@ public class DriveSubsystem extends SubsystemBase {
 
 
     public void setWheelSpeeds( DifferentialDrive.WheelSpeeds speeds) {
-        m_leftLeader.set( TalonSRXControlMode.Velocity, (speeds.left*Constants.DriveConstants.Counts_Per_Meter*(1/100))) ;
-        m_rightLeader.set( TalonSRXControlMode.Velocity, (speeds.right*Constants.DriveConstants.Counts_Per_Meter*(1/100)));
+        // m_leftLeader.set( TalonSRXControlMode.Velocity, (speeds.left*Constants.DriveConstants.Counts_Per_Meter*(1/100))) ;
+        // m_rightLeader.set( TalonSRXControlMode.Velocity, (speeds.right*Constants.DriveConstants.Counts_Per_Meter*(1/100)));
+
         // m_leftLeader.set( TalonSRXControlMode.Velocity, convert speeds.left to meters per second to counts per 100 mSec) ;
         // m_rightLeader.set( TalonSRXControlMode.Velocity, convert speeds.right meters per second to counts per 100 mSec) ;
     }
