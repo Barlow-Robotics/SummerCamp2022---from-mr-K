@@ -28,13 +28,25 @@ public final class Constants {
         public static final double kWheelRadius = 0.0508; // meters
         public static final int kEncoderResolution = 4096;
         
-        public static final double Gear_Ratio = 10.71;
-        public static final double Counts_Per_Revolution = 2048.0 * Gear_Ratio;
+        public static final double Gear_Ratio = 1.0 ;
+        public static final double Counts_Per_Revolution = kEncoderResolution * Gear_Ratio;
         public static final double InchesToMeters = 0.0254;
         public static final double Wheel_Diameter = 6.0 * InchesToMeters;
         public static final double Meters_Per_Revolution = Wheel_Diameter * Math.PI ;
         public static final double Meters_Per_Count = Meters_Per_Revolution / Counts_Per_Revolution;
         public static final double Counts_Per_Meter = Counts_Per_Revolution / Meters_Per_Revolution;
+        public static final double Meters_Per_Second_to_Counts_per_100_mSec = Counts_Per_Meter / 10.0 ;
+
+        public static final double max_velocity_counts = kMaxSpeed * Meters_Per_Second_to_Counts_per_100_mSec ;
+
+        public static final double closedVoltageRampingConstant = 0.0;
+        public static final double manualVoltageRampingConstant = 0.0;
+
+        public static final double kF = 0.341;
+        public static final double kP = 0.001;
+        public static final double kI = 0.0;
+        public static final double kD = 0.0;
+
 
         public static int ID_leftLeaderMotor = 4;
         public static int ID_leftFollowerMotor = 5;

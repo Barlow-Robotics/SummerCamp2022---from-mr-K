@@ -10,6 +10,7 @@ import frc.robot.sim.PhysicsSim;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -58,8 +59,10 @@ public class DriveSubsystem extends SubsystemBase {
         m_rightFollower = new WPI_VictorSPX(Constants.DriveConstants.ID_rightFollowerMotor);
 
         // Config Motors
-        m_leftLeader.configFactoryDefault();
-        m_rightLeader.configFactoryDefault();
+        setMotorConfig( m_leftLeader) ;
+        setMotorConfig( m_rightLeader) ;
+        // m_leftLeader.configFactoryDefault();
+        // m_rightLeader.configFactoryDefault();
         m_leftFollower.configFactoryDefault();
         m_rightFollower.configFactoryDefault();
         m_leftFollower.follow(m_leftLeader);
@@ -79,6 +82,31 @@ public class DriveSubsystem extends SubsystemBase {
         m_gyro.reset();
         CreateNetworkTableEntries();
     }
+
+
+
+
+    private void setMotorConfig(WPI_TalonSRX motor) { // changed to TalonFX for intake
+        motor.configFactoryDefault();
+        motor.configClosedloopRamp(Constants.DriveConstants.closedVoltageRampingConstant);
+        motor.configOpenloopRamp(Constants.DriveConstants.manualVoltageRampingConstant);
+        motor.config_kF(0, Constants.DriveConstants.kF);
+        motor.config_kP(0, Constants.DriveConstants.kP);
+        motor.config_kI(0, Constants.DriveConstants.kI);
+        motor.config_kD(0, Constants.DriveConstants.kD);
+        motor.setNeutralMode(NeutralMode.Brake);
+
+        // wpk not sure we need the line below. Add in if it doesn't seem to be working.
+
+        // 		/* Config sensor used for Primary PID [Velocity] */
+        // motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
+    }
+
+
+
+
+
+
 
 
 
@@ -178,8 +206,8 @@ public class DriveSubsystem extends SubsystemBase {
         // m_leftLeader.set( TalonSRXControlMode.Velocity, (speeds.left*Constants.DriveConstants.Counts_Per_Meter*(1/100))) ;
         // m_rightLeader.set( TalonSRXControlMode.Velocity, (speeds.right*Constants.DriveConstants.Counts_Per_Meter*(1/100)));
 
-        // m_leftLeader.set( TalonSRXControlMode.Velocity, convert speeds.left to meters per second to counts per 100 mSec) ;
-        // m_rightLeader.set( TalonSRXControlMode.Velocity, convert speeds.right meters per second to counts per 100 mSec) ;
+        m_leftLeader.set( TalonSRXControlMode.Velocity, speeds.left * Constants.DriveConstants.Meters_Per_Second_to_Counts_per_100_mSec) ;
+        m_rightLeader.set( TalonSRXControlMode.Velocity, speeds.right * Constants.DriveConstants.Meters_Per_Second_to_Counts_per_100_mSec ) ;
     }
 
 
