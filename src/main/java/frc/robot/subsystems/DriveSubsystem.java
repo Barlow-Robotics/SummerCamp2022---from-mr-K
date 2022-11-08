@@ -72,7 +72,8 @@ public class DriveSubsystem extends SubsystemBase {
         m_leftFollower.setInverted(InvertType.FollowMaster);
 
         m_leftLeader.setSensorPhase(true);
-        m_rightLeader.setSensorPhase(true);
+//        m_rightLeader.setSensorPhase(true);
+        m_rightLeader.setSensorPhase(false);
 
          diffDrive = new DifferentialDrive(m_leftLeader, m_rightLeader);
 
@@ -115,6 +116,12 @@ public class DriveSubsystem extends SubsystemBase {
                 m_gyro.getRotation2d(),
                 getLeftDistance(),
                 getRightDistance());
+
+        Pose2d pose = m_odometry.getPoseMeters() ;
+        NetworkTableInstance.getDefault().getEntry("drive/pose/x").setDouble(pose.getX());
+        NetworkTableInstance.getDefault().getEntry("drive/pose/y").setDouble(pose.getY());
+        NetworkTableInstance.getDefault().getEntry("drive/pose/rotation").setDouble(pose.getRotation().getDegrees());
+        
     }
 
 
@@ -168,8 +175,10 @@ public class DriveSubsystem extends SubsystemBase {
     public void drive(double xSpeed, double rot, boolean squareInputs) {
         NetworkTableInstance.getDefault().getEntry("drive/xSpeed").setDouble(m_leftLeader.getSelectedSensorVelocity());
         NetworkTableInstance.getDefault().getEntry("drive/rot").setDouble(m_leftLeader.getSelectedSensorPosition());
-        NetworkTableInstance.getDefault().getEntry("drive/arcadeDrive").setDouble(100.0);
-        diffDrive.arcadeDrive(xSpeed, rot, squareInputs);
+        NetworkTableInstance.getDefault().getEntry("drive/distance").setDouble(getLeftDistance());
+
+        // NetworkTableInstance.getDefault().getEntry("drive/arcadeDrive").setDouble(100.0);
+        // diffDrive.arcadeDrive(xSpeed, rot, squareInputs);
 
         DifferentialDrive.WheelSpeeds relativeSpeeds = DifferentialDrive.arcadeDriveIK(xSpeed, rot, squareInputs) ;
         DifferentialDrive.WheelSpeeds absoluteSpeeds 
@@ -268,9 +277,6 @@ public class DriveSubsystem extends SubsystemBase {
         NetworkTableInstance.getDefault().getEntry("drive/leftVolts").setDouble(0.0);
         NetworkTableInstance.getDefault().getEntry("drive/rightVolts").setDouble(0.0);
 
-        NetworkTableInstance.getDefault().getEntry("drive/pose/x").setDouble(0.0);
-        NetworkTableInstance.getDefault().getEntry("drive/pose/y").setDouble(0.0);
-        NetworkTableInstance.getDefault().getEntry("drive/pose/rotation").setDouble(0.0);
     }
 
     public void simulationInit() {

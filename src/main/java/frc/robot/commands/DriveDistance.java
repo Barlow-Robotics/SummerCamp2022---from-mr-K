@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
@@ -15,6 +16,9 @@ public class DriveDistance extends CommandBase {
     DriveSubsystem drive;
     double targetDistance;
     double speed ;
+
+    double startingLeftDistance ;
+    double startingRightDistance ;
 
 
     /** Creates a new DriveDistance. */
@@ -30,6 +34,8 @@ public class DriveDistance extends CommandBase {
     @Override
     public void initialize() {
         drive.resetOdometry(new Pose2d());
+        startingLeftDistance = drive.getLeftDistance() ;
+        startingRightDistance = drive.getRightDistance() ;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -47,7 +53,7 @@ public class DriveDistance extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        double distanceTraveled = (drive.getLeftDistance() + drive.getRightDistance()) / 2.0 ;
+        double distanceTraveled = (( drive.getLeftDistance() - startingLeftDistance) + ( drive.getRightDistance() - startingRightDistance))/2.0 ;
         if (Math.abs(distanceTraveled) >= Math.abs(targetDistance)) {
             return true ;
         }
