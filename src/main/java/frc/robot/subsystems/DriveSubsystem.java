@@ -211,6 +211,20 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
 
+    public void setWheelSpeeds( double left, double right) {
+        setWheelSpeeds(new DifferentialDrive.WheelSpeeds(left, right));
+    }
+
+
+    public DifferentialDrive.WheelSpeeds getWheelSpeeds() {
+        DifferentialDrive.WheelSpeeds result = new DifferentialDrive.WheelSpeeds() ;
+        result.left = getLeftSpeed() ;
+        result.right = getRightSpeed() ;
+
+        return result ;
+    }
+
+
 
     // private double getSpeed(WPI_TalonFX motor) {
     //     // multiplied by 10 because velocity reported as counts per 1/10th second
