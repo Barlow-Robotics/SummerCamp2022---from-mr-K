@@ -184,7 +184,7 @@ public class DriveSubsystem extends SubsystemBase {
         DifferentialDrive.WheelSpeeds absoluteSpeeds 
            = new DifferentialDrive.WheelSpeeds( 
                  relativeSpeeds.left * Constants.DriveConstants.kMaxSpeed, //MaxAttainableVelocity
-                 relativeSpeeds.left * Constants.DriveConstants.kMaxSpeed);
+                 relativeSpeeds.right * Constants.DriveConstants.kMaxSpeed);
         setWheelSpeeds( absoluteSpeeds ) ;
     }
 

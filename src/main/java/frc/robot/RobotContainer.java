@@ -22,6 +22,8 @@ import frc.robot.subsystems.Vision;
 
 import java.util.HashMap;
 
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPRamseteCommand;
 import edu.wpi.first.math.controller.RamseteController;
@@ -175,21 +177,30 @@ public class RobotContainer {
     }
 
 
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     *
+     * @return the command to run in autonomous
+     */
 
-
-    public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
+    public Command getAutonomousCommand() {
         // This is just an example event map. It would be better to have a constant,
         // global event map
         // in your code that will be used by all path following commands.
         HashMap<String, Command> eventMap = new HashMap<>();
-        eventMap.put("marker1", new PrintCommand("Passed marker 1"));
+        eventMap.put("FirstBase", new PrintCommand("Passed first leg"));
+        eventMap.put("half way", new PrintCommand("half way there"));
+        eventMap.put("done", new PrintCommand("arrived at detination"));
         // eventMap.put("intakeDown", new IntakeDown());
+
+        // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
+//        PathPlannerTrajectory traj = PathPlanner.loadPath("SquarePath", new PathConstraints(1, 1));        
+        PathPlannerTrajectory traj = PathPlanner.loadPath("FancyPath", new PathConstraints(2, 1));        
 
         Command ic = new InstantCommand(() -> {
             // Reset odometry for the first path you run during auto
-            if (isFirstPath) {
-                // this.resetOdometry(traj.getInitialPose());
-            }
+            m_drive.resetEncoders();
+            m_drive.resetOdometry(traj.getInitialPose());
         });
 
         RamseteController controller = new RamseteController();
@@ -206,15 +217,6 @@ public class RobotContainer {
         return new SequentialCommandGroup(ic, pathFollowingCommand);
     }
 
-    
-    /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
-     * @return the command to run in autonomous
-     */
-    // public Command getAutonomousCommand() {
-    // // An ExampleCommand will run in autonomous
 
-    // return m_autoCommand;
-    // }
+
 }
