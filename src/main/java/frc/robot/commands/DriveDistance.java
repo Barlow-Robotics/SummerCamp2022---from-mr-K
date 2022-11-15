@@ -41,7 +41,7 @@ public class DriveDistance extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        drive.setWheelSpeeds(new DifferentialDrive.WheelSpeeds(speed, speed));
+        drive.setWheelSpeeds(new DifferentialDrive.WheelSpeeds(speed, -speed));
     }
 
     // Called once the command ends or is interrupted.
