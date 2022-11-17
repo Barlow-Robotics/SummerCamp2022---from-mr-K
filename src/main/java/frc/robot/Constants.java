@@ -37,6 +37,11 @@ public final class Constants {
         public static final double Counts_Per_Meter = Counts_Per_Revolution / Meters_Per_Revolution;
         public static final double Meters_Per_Second_to_Counts_per_100_mSec = Counts_Per_Meter / 10.0 ;
 
+        public static final double baseDiameter = 33 * InchesToMeters;
+        public static final double cirucmferenceWithBD = baseDiameter * Math.PI;
+        public static final double wheelBase = 22 * InchesToMeters;
+        public static final double cirucmferenceWithWB = wheelBase * Math.PI;
+
         public static final double max_velocity_counts = kMaxSpeed * Meters_Per_Second_to_Counts_per_100_mSec ;
 
         public static final double closedVoltageRampingConstant = 0.0;

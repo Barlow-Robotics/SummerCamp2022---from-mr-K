@@ -8,24 +8,26 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 import java.util.*;
 
-public class DriveDistance extends CommandBase {
+public class Pivot extends CommandBase {
 
     DriveSubsystem drive;
     double targetDistance;
-    double speed ;
+    double speed;
+    double targetAngle;
 
     double startingLeftDistance ;
     double startingRightDistance ;
 
 
     /** Creates a new DriveDistance. */
-    public DriveDistance(DriveSubsystem d, double dist, double s) {
+    public Pivot(DriveSubsystem d, double a, double s) {
         // Use addRequirements() here to declare subsystem dependencies.
         drive = d;
-        targetDistance = dist;
+        targetAngle = a;
         speed = s;
         addRequirements(drive);
     }
@@ -36,12 +38,13 @@ public class DriveDistance extends CommandBase {
         drive.resetOdometry(new Pose2d());
         startingLeftDistance = drive.getLeftDistance() ;
         startingRightDistance = drive.getRightDistance() ;
+        targetDistance = (Constants.DriveConstants.cirucmferenceWithWB * targetAngle) / 360;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        drive.setWheelSpeeds(new DifferentialDrive.WheelSpeeds(speed, speed));
+        drive.setWheelSpeeds(new DifferentialDrive.WheelSpeeds(speed, -speed));
     }
 
     // Called once the command ends or is interrupted.
@@ -53,7 +56,7 @@ public class DriveDistance extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        double distanceTraveled = (( drive.getLeftDistance() - startingLeftDistance) + ( drive.getRightDistance() - startingRightDistance))/2.0 ;
+        double distanceTraveled = Math.abs(drive.getLeftDistance() - startingLeftDistance);
         if (Math.abs(distanceTraveled) >= Math.abs(targetDistance)) {
             return true ;
         }

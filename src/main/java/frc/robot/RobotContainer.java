@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.commands.AdjustTurretHoodAngle;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.DriveDistance;
+import frc.robot.commands.Pivot;
 import frc.robot.commands.RotateTurret;
 import frc.robot.commands.StartIndexAndShooter;
 import frc.robot.commands.StopIndexAndShooter;
@@ -60,7 +61,8 @@ public class RobotContainer {
     // private final RotateTurret rotateTurretCommand = new RotateTurret(m_turret);
     private final StartIndexAndShooter startIndexAndShooterCommand = new StartIndexAndShooter(m_shooter, m_index);
     private final StopIndexAndShooter stopIndexAndShooterCommand = new StopIndexAndShooter(m_index, m_shooter);
-    private final DriveDistance driveDistanceCommand = new DriveDistance(m_drive, -2, -1);
+    private final DriveDistance driveDistanceCommand = new DriveDistance(m_drive, 2, 1);
+    private final Pivot pivotCommand = new Pivot(m_drive, 180, 1);
     // private final TurnOffUnderGlow turnOffUnderGlowCommand = new
     // TurnOffUnderGlow(m_underGlow);
     // private final TurnOnUnderGlow turnOnUnderGlowCommand = new
@@ -72,6 +74,7 @@ public class RobotContainer {
     private JoystickButton alignWithTargetButton;
     private JoystickButton indexAndShooterButton;
     private JoystickButton driveDistanceButton;
+    private JoystickButton pivotButton;
 
     // HashMap<String, PathPlannerTrajectory> trajectories;
 
@@ -166,14 +169,15 @@ public class RobotContainer {
 
         alignWithTargetButton = new JoystickButton(m_operatorController, Constants.Logitech_Dual_Action.Left_Bumper);
         indexAndShooterButton = new JoystickButton(m_operatorController, Constants.Logitech_Dual_Action.Right_Bumper);
+        driveDistanceButton = new JoystickButton(m_driverController, Constants.Logitech_Dual_Action.Button_Y);
+        pivotButton = new JoystickButton(m_driverController, Constants.Logitech_Dual_Action.Button_X);
 
         alignWithTargetButton.whileHeld(alignWithTargetCommand);
         indexAndShooterButton.whenPressed(startIndexAndShooterCommand).whenReleased(stopIndexAndShooterCommand);
 
-        driveDistanceButton = new JoystickButton(m_driverController, Constants.Logitech_Dual_Action.Button_Y);
-
 //        driveDistanceButton.whileHeld(driveDistanceCommand);
         driveDistanceButton.whenPressed(driveDistanceCommand);
+        pivotButton.whenPressed(pivotCommand);
     }
 
 
