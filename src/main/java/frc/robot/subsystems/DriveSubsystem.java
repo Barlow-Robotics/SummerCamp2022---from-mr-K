@@ -103,14 +103,6 @@ public class DriveSubsystem extends SubsystemBase {
         // motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
     }
 
-
-
-
-
-
-
-
-
     public void periodic() {
         m_odometry.update(
                 m_gyro.getRotation2d(),
@@ -123,7 +115,6 @@ public class DriveSubsystem extends SubsystemBase {
         NetworkTableInstance.getDefault().getEntry("drive/pose/rotation").setDouble(pose.getRotation().getDegrees());
         
     }
-
 
     public void setDefaultNeutralMode() {
         m_leftLeader.setNeutralMode(NeutralMode.Brake);
