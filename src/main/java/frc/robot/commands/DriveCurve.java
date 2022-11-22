@@ -56,11 +56,16 @@ public class DriveCurve extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    drive.setWheelSpeeds(new DifferentialDrive.WheelSpeeds(0.0, 0.0));
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    double distanceTraveled = Math.abs(drive.getLeftDistance() - startingLeftDistance);
+        if (Math.abs(distanceTraveled) >= Math.abs(targetDistance)) {
+            return true;
+        }
+        return false;
   }
 }
