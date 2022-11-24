@@ -8,7 +8,6 @@ import frc.robot.commands.AdjustTurretHoodAngle;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.DriveDistance;
 import frc.robot.commands.Pivot;
-import frc.robot.commands.RotateTurret;
 import frc.robot.commands.StartIndexAndShooter;
 import frc.robot.commands.StopIndexAndShooter;
 import frc.robot.commands.TurnOffUnderGlow;
@@ -58,7 +57,6 @@ public class RobotContainer {
 
     private final AlignWithTarget alignWithTargetCommand = new AlignWithTarget(m_turret, m_vision, m_hood);
     private final AdjustTurretHoodAngle adjustTurretHoodAngleCommand = new AdjustTurretHoodAngle(m_hood);
-    private final RotateTurret rotateTurretCommand = new RotateTurret(m_turret);
     private final StartIndexAndShooter startIndexAndShooterCommand = new StartIndexAndShooter(m_shooter, m_index);
     private final StopIndexAndShooter stopIndexAndShooterCommand = new StopIndexAndShooter(m_index, m_shooter);
     private final DriveDistance driveDistanceCommand = new DriveDistance(m_drive, 2, 1);

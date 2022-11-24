@@ -37,7 +37,7 @@ public class DriveDistance extends CommandBase {
         startingLeftDistance = drive.getLeftDistance();
         startingRightDistance = drive.getRightDistance();
 
-        NetworkTableInstance.getDefault().getEntry("initialEncoderCounts").setDouble(get.Pose2d());
+       // NetworkTableInstance.getDefault().getEntry("initialEncoderCounts").setDouble(get.Pose2d());
     }
 
     // Called every time the scheduler runs while the command is scheduled.

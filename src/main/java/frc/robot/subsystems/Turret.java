@@ -28,39 +28,34 @@ public class Turret extends SubsystemBase {
         setMotorConfig(m_turretMotor);
         m_turretMotor.setInverted(InvertType.InvertMotorOutput);
 
-        // leftLimitSwitch = new DigitalInput(Constants.ShooterConstants.Turret.ID_LeftLimitSwitch);
-        // rightLimitSwitch = new DigitalInput(Constants.ShooterConstants.Turret.ID_RightLimitSwitch);
+        leftLimitSwitch = new DigitalInput(Constants.ShooterConstants.Turret.ID_LeftLimitSwitch);
+        rightLimitSwitch = new DigitalInput(Constants.ShooterConstants.Turret.ID_RightLimitSwitch);
     }
 
     public void rotateTurret(double rotateVelocity) {
         // if the limit switch is hit...
 
-        double output = 0.0 ;
-        if ( rotateVelocity > 0.0 && leftLimitSwitch.get() ) {
-            output = rotateVelocity ;
-        } else if ( rotateVelocity < 0.0 && rightLimitSwitch.get() ) {
-            output = rotateVelocity ;
-        }
-        m_turretMotor.set(TalonSRXControlMode.PercentOutput, output);
+        // double output = 0.0;
+        double output = rotateVelocity;
 
-        // if (rotateVelocity > 0) {
-        //     if (leftLimitSwitch.get()) {
-        //         // System.out.println("left is pressed");
-        //         m_turretMotor.set(TalonSRXControlMode.PercentOutput, 0);
-        //     } else {
-                // m_turretMotor.set(TalonSRXControlMode.PercentOutput, rotateVelocity);
-    //         }
-    //     } else {
-    //         if (rightLimitSwitch.get()) {
-    //             // System.out.println("right is pressed");
-    //             m_turretMotor.set(TalonSRXControlMode.PercentOutput, 0);
-    //         } else {
-    //             m_turretMotor.set(TalonSRXControlMode.PercentOutput, rotateVelocity);
-    //         }
-    //     }
+        if (rotateVelocity > 0.0 && leftLimitSwitch.get()) {
+            // output = rotateVelocity;
+            output = 0.0;
+        }
+        else if (rotateVelocity < 0.0 && leftLimitSwitch.get()) {
+            output = rotateVelocity;
+        }
+        else if (rotateVelocity < 0.0 && rightLimitSwitch.get()) {
+            // output = rotateVelocity; 
+            output = 0.0;
+        }
+        else if (rotateVelocity > 0.0 && rightLimitSwitch.get()) {
+            output = rotateVelocity;
+        }
+        
+        m_turretMotor.set(TalonSRXControlMode.PercentOutput, output);
      }
      
-
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
