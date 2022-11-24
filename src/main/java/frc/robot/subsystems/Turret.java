@@ -42,16 +42,16 @@ public class Turret extends SubsystemBase {
             // output = rotateVelocity;
             output = 0.0;
         }
-        else if (rotateVelocity < 0.0 && leftLimitSwitch.get()) {
-            output = rotateVelocity;
-        }
+        //  else if (rotateVelocity < 0.0 && leftLimitSwitch.get()) {
+        //      output = rotateVelocity;
+        //  }
         else if (rotateVelocity < 0.0 && rightLimitSwitch.get()) {
             // output = rotateVelocity; 
             output = 0.0;
         }
-        else if (rotateVelocity > 0.0 && rightLimitSwitch.get()) {
-            output = rotateVelocity;
-        }
+        //  else if (rotateVelocity > 0.0 && rightLimitSwitch.get()) {
+        //      output = rotateVelocity;
+        //  }
         
         m_turretMotor.set(TalonSRXControlMode.PercentOutput, output);
      }
