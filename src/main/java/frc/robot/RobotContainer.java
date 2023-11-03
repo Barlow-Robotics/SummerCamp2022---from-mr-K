@@ -60,7 +60,7 @@ public class RobotContainer {
     private final StartIndexAndShooter startIndexAndShooterCommand = new StartIndexAndShooter(m_shooter, m_index);
     private final StopIndexAndShooter stopIndexAndShooterCommand = new StopIndexAndShooter(m_index, m_shooter);
     private final DriveDistance driveDistanceCommand = new DriveDistance(m_drive, 2, 1);
-    private final Pivot pivotCommand = new Pivot(m_drive, 180, 0.5);
+    private final Pivot pivotCommand = new Pivot(m_drive, 360, 0.5);
     // private final TurnOffUnderGlow turnOffUnderGlowCommand = new
     // TurnOffUnderGlow(m_underGlow);
     // private final TurnOnUnderGlow turnOnUnderGlowCommand = new
